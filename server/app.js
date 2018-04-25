@@ -13,7 +13,7 @@ const answerRouter = require('./routes/answers');
 const app = express();
 app.use(cors())
 
-mongoose.connect('mongodb://localhost:27017/overflow');
+mongoose.connect('mongodb://faizalrmnd:ponyoponyo@ds257589.mlab.com:57589/hacktivoverflowdb');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
