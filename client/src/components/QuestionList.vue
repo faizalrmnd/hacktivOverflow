@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ questionList }}
+    <!-- {{ questionList }} -->
     <div v-for="(question, index) in questionList" v-bind:key='index' class="card">
       <h5 class="card-header">{{ question.title }}</h5>
       <div class="card-body">

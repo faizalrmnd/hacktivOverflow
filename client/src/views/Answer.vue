@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ answer }}
+    <!-- {{ answer }} -->
     <div class="card">
       <h5 class="card-header">{{ answer.title }}</h5>
       <div class="card-body">
@@ -43,7 +43,7 @@ export default {
     postAnswer: function (questionId) {
       let token = localStorage.getItem('token')
 
-      axios.post('http://localhost:3000/answer/post', {
+      axios.post('http://35.197.134.112/answer/post', {
         questionId: questionId,
         answer: this.answerpost
       }, { headers: { token: token } })
