@@ -11,7 +11,7 @@
           <button @click="vote(answer._id, 'plus')" type="button" class="btn btn-primary">
             upvote 
           </button>
-          <!-- {{ answer.upvote.length - answer.downvote.length }} -->
+          {{ answer.upvote.length - answer.downvote.length }}
           <button @click="vote(answer._id, 'minus')" type="button" class="btn btn-primary">
             downvote 
           </button>
@@ -29,7 +29,7 @@
           <button @click="answerVote(jawaban.answer._id, 'plus')" type="button" class="btn btn-primary">
             upvote 
           </button>
-          <!-- {{ jawaban.answer.upvote.length - jawaban.answer.downvote.length }} -->
+          {{ jawaban.answer.upvote.length - jawaban.answer.downvote.length }}
           <button @click="answerVote(jawaban.answer._id, 'minus')" type="button" class="btn btn-primary">
             downvote 
           </button>
@@ -89,7 +89,7 @@ export default {
       let token = localStorage.getItem('token')
       let self = this
 
-      axios.post('http://35.197.134.112/question/vote', {
+      axios.put('http://35.197.134.112/question/vote', {
         id: questionId,
         command: command
       }, { headers: { token: token } })
@@ -108,7 +108,7 @@ export default {
       let token = localStorage.getItem('token')
       let self = this
 
-      axios.post('http://35.197.134.112/answer/vote', {
+      axios.put('http://35.197.134.112/answer/vote', {
         id: answerId,
         command: command
       }, { headers: { token: token } })

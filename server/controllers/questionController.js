@@ -69,11 +69,11 @@ module.exports = {
       .then(result => {
         if(!result.voter.includes(decoded.id)) {
           if (req.body.command ==='plus') {
-            question.findByIdAndUpdate({ _id: req.body.questionId }, {
+            question.findByIdAndUpdate({ _id: req.body.id }, {
               $push: { voter: mongoose.Types.ObjectId(decoded.id) }
             })
             .then(addVoter => {
-              question.findByIdAndUpdate({ _id: req.body.questionId }, {
+              question.findByIdAndUpdate({ _id: req.body.id }, {
                 $push: { upvote: mongoose.Types.ObjectId(decoded.id) }
               })
               .then(upvoted => {
@@ -84,11 +84,11 @@ module.exports = {
               })
             })
           } else if (req.body.command === 'minus') {
-            question.findByIdAndUpdate({ _id: req.body.questionId }, {
+            question.findByIdAndUpdate({ _id: req.body.id }, {
               $push: { voter: mongoose.Types.ObjectId(decoded.id) }
             })
             .then(addVoter => {
-              question.findByIdAndUpdate({ _id: req.body.questionId }, {
+              question.findByIdAndUpdate({ _id: req.body.id }, {
                 $push: { downvote: mongoose.Types.ObjectId(decoded.id) }
               })
               .then(upvoted => {

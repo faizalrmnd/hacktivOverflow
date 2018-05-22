@@ -85,7 +85,7 @@ export default new Vuex.Store({
       }, { headers: { token: token } })
         .then(function (response) {
           axios
-            .get('http://35.197.134.112/question', { headers: { token: payload } })
+            .get('http://35.197.134.112/question', { headers: { token: token } })
             .then(response => {
             // If request is good...
             // console.log(response.data.data.todo)
