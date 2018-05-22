@@ -66,7 +66,7 @@ export default new Vuex.Store({
         .then(response => {
         // If request is good...
         // console.log(response.data.data.todo)
-          console.log(JSON.stringify(response.data.data))
+          // console.log(JSON.stringify(response.data.data))
           context.commit('setQuestion', response.data.data)
         })
         .catch((error) => {
@@ -84,8 +84,17 @@ export default new Vuex.Store({
         question: payload.question
       }, { headers: { token: token } })
         .then(function (response) {
-          // context.commit('setUser', response.data.user)
-          console.log(response)
+          axios
+            .get('http://35.197.134.112/question', { headers: { token: payload } })
+            .then(response => {
+            // If request is good...
+            // console.log(response.data.data.todo)
+              // console.log(JSON.stringify(response.data.data))
+              context.commit('setQuestion', response.data.data)
+            })
+            .catch((error) => {
+              console.log('error 3 ' + error)
+            })
         })
         .catch(function (error) {
           console.log(error)

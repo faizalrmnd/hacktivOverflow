@@ -7,6 +7,7 @@ const middleware = require('../middleware/auth');
 router.get('/', middleware.isUser, answerController.getAnswer);
 router.post('/post', middleware.isUser, answerController.postAnswer);
 router.post('/delete', middleware.isUser, answerController.removeAnswer);
+router.put('/vote', middleware.isUser, answerController.vote);
 
 
 module.exports = router;

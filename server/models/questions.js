@@ -5,7 +5,9 @@ let questionSchema = mongoose.Schema({
   title: String,
   question: String,
   answer: [{ type: mongoose.Schema.Types.ObjectId, ref: 'answer' }],
-  vote: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }]
+  voter: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
+  upvote: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
+  downvote: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }]
 },{
   timestamps: true
 })

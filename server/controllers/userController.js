@@ -8,7 +8,7 @@ require('dotenv').config()
 module.exports = {
   signUp: function(req, res) {
     users.findOne({
-      username: req.body.username
+      email: req.body.email
     })
     .then(userData => {
       if(userData == null) {
@@ -16,15 +16,16 @@ module.exports = {
         let pass = bcrypt.hashSync(req.body.password, saltRounds);
     
         let newUser = new users({
-          username: req.body.username,
-          password: pass
+          email: req.body.email,
+          password: pass,
+          newUser: true
         })
     
         newUser.save((err, result) => {
           if(err) {
             console.log(err);
           } else {
-            let token = jwt.sign({ id: result._id, username: result.username }, process.env.SECRET)
+            let token = jwt.sign({ id: result._id, email: result.email }, process.env.SECRET)
             res.status(201).json({
               message: 'successfully added a new user !',
               token: token
@@ -42,10 +43,10 @@ module.exports = {
   },
   signIn: function(req, res) {
     users
-      .findOne({ username: req.body.username})
+      .findOne({ email: req.body.email})
       .then(user => {
         if(bcrypt.compareSync(req.body.password, user.password)){
-          let token = jwt.sign({ id: user._id, username: user.username }, process.env.SECRET)
+          let token = jwt.sign({ id: user._id, email: user.email }, process.env.SECRET)
           res.status(200).json({
             token: token
           })

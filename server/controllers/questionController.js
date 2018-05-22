@@ -59,5 +59,52 @@ module.exports = {
         data: update
       })
     })
+  },
+
+  vote: function (req, res) {
+    let token = req.headers.token;
+
+    jwt.verify(token, process.env.SECRET, function(err, decoded) {
+      question.findById({ _id: req.body.id })
+      .then(result => {
+        if(!result.voter.includes(decoded.id)) {
+          if (req.body.command ==='plus') {
+            question.findByIdAndUpdate({ _id: req.body.questionId }, {
+              $push: { voter: mongoose.Types.ObjectId(decoded.id) }
+            })
+            .then(addVoter => {
+              question.findByIdAndUpdate({ _id: req.body.questionId }, {
+                $push: { upvote: mongoose.Types.ObjectId(decoded.id) }
+              })
+              .then(upvoted => {
+                res.status(200).json({
+                  message: `berhasil menambah vote`,
+                  data: upvoted
+                })
+              })
+            })
+          } else if (req.body.command === 'minus') {
+            question.findByIdAndUpdate({ _id: req.body.questionId }, {
+              $push: { voter: mongoose.Types.ObjectId(decoded.id) }
+            })
+            .then(addVoter => {
+              question.findByIdAndUpdate({ _id: req.body.questionId }, {
+                $push: { downvote: mongoose.Types.ObjectId(decoded.id) }
+              })
+              .then(upvoted => {
+                res.status(200).json({
+                  message: `berhasil mengurangi vote`,
+                  data: upvoted
+                })
+              })
+            })
+          }
+        } else {
+          res.status(500).json({
+            message: 'sudah pernah vote'
+          })
+        }
+      })
+    })
   }
 }

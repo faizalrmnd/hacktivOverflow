@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row mx-0">
+    <!-- <div class="row mx-0">
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary col-12 px-5">
 
         <a class="navbar-brand" href="#">Hoverflow!</a>
@@ -19,9 +19,10 @@
           </ul>
         </div>
       </nav>
-    </div>
+    </div> -->
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    <navbar/>
+    <button id="add" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
       Add Question
     </button>
 
@@ -30,7 +31,7 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">Add Your Question</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -40,7 +41,7 @@
               <input class="form-control" v-model="title" type="text" placeholder="Title">
             </div>
             <div class="form-group">
-              <label for="exampleFormControlTextarea1">Example textarea</label>
+              <label for="exampleFormControlTextarea1">Question Description</label>
               <textarea class="form-control" v-model="question" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
           </div>
@@ -51,17 +52,21 @@
         </div>
       </div>
     </div>
-    <QuestionList/>
+    <center>
+      <QuestionList/>
+    </center>
   </div>
 </template>
 
 <script>
 import QuestionList from '@/components/QuestionList.vue'
+import navbar from '@/components/NavBar.vue'
 
 export default {
   name: 'questions',
   components: {
-    QuestionList
+    QuestionList,
+    navbar
   },
   data () {
     return {
@@ -78,10 +83,19 @@ export default {
 
       this.$store.dispatch('addQuestion', payload)
     }
+  },
+  mounted () {
+    let token = localStorage.getItem('token')
+
+    if (!token) {
+      this.$router.push('/')
+    }
   }
 }
 </script>
 
 <style>
-
+  #add {
+    margin: 25px;
+  }
 </style>

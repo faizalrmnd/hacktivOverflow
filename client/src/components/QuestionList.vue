@@ -43,6 +43,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .card {
+    width: 500px;
+    border: solid royalblue;
+    margin: 10px;
+  }
 </style>
