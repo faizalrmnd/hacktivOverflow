@@ -7,7 +7,7 @@
         <h5 class="card-header">{{ answer.title }}</h5>
         <div class="card-body">
           <h5 class="card-title">{{ answer.question }}</h5>
-          <p class="card-text">{{ answer.user.username }}</p>
+          <p class="card-text">{{ answer.user.email }}</p>
           <button @click="vote(answer._id, 'plus')" type="button" class="btn btn-primary">
             upvote 
           </button>
@@ -24,13 +24,13 @@
     <div v-for="(jawaban, index) in answer.answer" v-bind:key='index' class="card">
       <div class="card-body">
         <h4 class="card-title">{{ jawaban.answer }}</h4>
-        <p class="card-text">By: {{ jawaban.user.username }}</p>
+        <p class="card-text">By: {{ jawaban.user.email }}</p>
 
-          <button @click="answerVote(jawaban.answer._id, 'plus')" type="button" class="btn btn-primary">
+          <button @click="answerVote(jawaban._id, 'plus')" type="button" class="btn btn-primary">
             upvote 
           </button>
-          {{ jawaban.answer.upvote.length - jawaban.answer.downvote.length }}
-          <button @click="answerVote(jawaban.answer._id, 'minus')" type="button" class="btn btn-primary">
+          {{ jawaban.upvote.length - jawaban.downvote.length }}
+          <button @click="answerVote(jawaban._id, 'minus')" type="button" class="btn btn-primary">
             downvote 
           </button>
 
@@ -75,11 +75,14 @@ export default {
         answer: this.answerpost
       }, { headers: { token: token } })
         .then(function (response) {
-          self.$store.dispatch('getQuestion', token)
-
-          setTimeout(function () {
+          self.$store.dispatch('updateQuestion', token)
+          .then((updated) => {
             self.$store.dispatch('getAnswer', self.$store.state.answer._id)
-          }, 1000)
+          })
+
+          // setTimeout(function () {
+          //   self.$store.dispatch('getAnswer', self.$store.state.answer._id)
+          // }, 1000)
         })
         .catch(function (error) {
           console.log(error)

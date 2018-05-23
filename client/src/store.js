@@ -80,6 +80,23 @@ export default new Vuex.Store({
           console.log('error 3 ' + error)
         })
     },
+    updateQuestion: function (context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get('http://35.197.134.112/question', { headers: { token: payload } })
+          .then(response => {
+            // If request is good...
+            // console.log(response.data.data.todo)
+          // console.log(JSON.stringify(response.data.data))
+            context.commit('setQuestion', response.data.data)
+            resolve()
+          })
+          .catch((error) => {
+            console.log('error 3 ' + error)
+            reject(error)
+          })
+      })
+    },
     getAnswer: function (context, payload) {
       context.commit('setAnswer', payload)
     },
@@ -109,7 +126,7 @@ export default new Vuex.Store({
     },
     oAuth: function (context, payload) {
       return new Promise((resolve, reject) => {
-        axios.post('http://35.197.134.112/login', {
+        axios.post('http://35.197.134.112/oauth', {
           email: payload,
           password: 'gmail'
         })

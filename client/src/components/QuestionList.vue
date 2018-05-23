@@ -5,7 +5,7 @@
       <h5 class="card-header">{{ question.title }}</h5>
       <div class="card-body">
         <h5 class="card-title">{{ question.question }}</h5>
-        <p class="card-text">{{ question.user.username }}</p>
+        <p class="card-text">{{ question.user.email }}</p>
         <!-- <p class="card-text">{{ question._id }}</p> -->
         <a href="#" @click="getAnswer(question._id)" class="btn btn-primary">Answers</a>
       </div>
