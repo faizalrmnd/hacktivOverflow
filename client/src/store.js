@@ -34,31 +34,38 @@ export default new Vuex.Store({
   },
   actions: {
     register: function (context, payload) {
-      console.log('masuk')
-      axios.post('http://35.197.134.112/register', {
-        username: payload.username,
-        password: payload.password
+      return new Promise((resolve, reject) => {
+        axios.post('http://35.197.134.112/register', {
+          email: payload.email,
+          password: payload.password
+        })
+          .then(function (response) {
+            context.commit('setUser', payload)
+            localStorage.setItem('token', response.data.token)
+            resolve()
+          })
+          .catch(function (error) {
+            console.log(error)
+            reject(error)
+          })
       })
-        .then(function (response) {
-          context.commit('setUser', payload)
-          localStorage.setItem('token', response.data.token)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
     },
     login: function (context, payload) {
-      axios.post('http://35.197.134.112/login', {
-        username: payload.username,
-        password: payload.password
+      return new Promise((resolve, reject) => {
+        axios.post('http://35.197.134.112/login', {
+          email: payload.email,
+          password: payload.password
+        })
+          .then(function (response) {
+            // context.commit('setUser', response.data.user)
+            localStorage.setItem('token', response.data.token)
+            resolve()
+          })
+          .catch(function (error) {
+            console.log(error)
+            reject(error)
+          })
       })
-        .then(function (response) {
-          // context.commit('setUser', response.data.user)
-          localStorage.setItem('token', response.data.token)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
     },
     getQuestion: function (context, payload) {
       axios
@@ -99,6 +106,23 @@ export default new Vuex.Store({
         .catch(function (error) {
           console.log(error)
         })
+    },
+    oAuth: function (context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post('http://35.197.134.112/login', {
+          email: payload,
+          password: 'gmail'
+        })
+          .then(function (response) {
+            // context.commit('setUser', response.data.user)
+            localStorage.setItem('token', response.data.token)
+            resolve()
+          })
+          .catch(function (error) {
+            console.log(error)
+            reject(error)
+          })
+      })
     }
   }
 })

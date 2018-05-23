@@ -61,5 +61,36 @@ module.exports = {
           msg: 'wrong password or username!'
         })
       })
+  },
+  oAuthLogin: function (req, res) {
+    users.findOne({
+      email: req.body.email
+    })
+    .then(userData => {
+      if(userData == null) {
+        const saltRounds = 10;
+        let pass = bcrypt.hashSync(req.body.password, saltRounds);
+    
+        let newUser = new users({
+          email: req.body.email,
+          password: pass,
+          newUser: true
+        })
+
+        newUser.save()
+        .then(data => {
+          let token = jwt.sign({ id: data._id, email: data.email }, process.env.SECRET);
+          res.status(200).json({
+            token: token
+          })
+        })
+        .catch(err => console.log(err))
+      } else {
+        let token = jwt.sign({ id: userData._id, email: userData.email }, process.env.SECRET);
+        res.status(200).json({
+          token: token
+        })
+      }
+    })
   }
 };
